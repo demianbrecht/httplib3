@@ -70,7 +70,7 @@ Req-sent-unread-response       _CS_REQ_SENT       <response_class>
 
 import email.parser
 import email.message
-import http
+import httplib3
 import io
 import os
 import re
@@ -100,11 +100,11 @@ _CS_REQ_SENT = 'Request-sent'
 
 
 # hack to maintain backwards compatibility
-globals().update(http.HTTPStatus.__members__)
+globals().update(httplib3.HTTPStatus.__members__)
 
 # another hack to maintain backwards compatibility
 # Mapping status codes to official W3C names
-responses = {v: v.phrase for v in http.HTTPStatus.__members__.values()}
+responses = {v: v.phrase for v in httplib3.HTTPStatus.__members__.values()}
 
 # maximal amount of data to read at one time in _safe_read
 MAXAMOUNT = 1048576
@@ -148,7 +148,7 @@ _METHODS_EXPECTING_BODY = {'PATCH', 'POST', 'PUT'}
 
 class HTTPMessage(email.message.Message):
     # XXX The only usage of this method is in
-    # http.server.CGIHTTPRequestHandler.  Maybe move the code there so
+    # httplib3.server.CGIHTTPRequestHandler.  Maybe move the code there so
     # that it doesn't need to be part of the public API.  The API has
     # never been defined so this could cause backwards compatibility
     # issues.
@@ -803,7 +803,7 @@ class HTTPConnection:
         response = self.response_class(self.sock, method=self._method)
         (version, code, message) = response._read_status()
 
-        if code != http.HTTPStatus.OK:
+        if code != httplib3.HTTPStatus.OK:
             self.close()
             raise OSError("Tunnel connection failed: %d %s" % (code,
                                                                message.strip()))

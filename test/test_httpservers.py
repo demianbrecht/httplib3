@@ -4,9 +4,9 @@ Written by Cody A.W. Somerville <cody-somerville@ubuntu.com>,
 Josip Dzolonga, and Michael Otteneder for the 2007/08 GHOP contest.
 """
 
-from http.server import BaseHTTPRequestHandler, HTTPServer, \
+from httplib3.server import BaseHTTPRequestHandler, HTTPServer, \
      SimpleHTTPRequestHandler, CGIHTTPRequestHandler
-from http import server, HTTPStatus
+from httplib3 import server, HTTPStatus
 
 import os
 import sys
@@ -850,7 +850,7 @@ class MiscTestCase(unittest.TestCase):
             if name.startswith('_') or name in blacklist:
                 continue
             module_object = getattr(server, name)
-            if getattr(module_object, '__module__', None) == 'http.server':
+            if getattr(module_object, '__module__', None) == 'httplib3.server':
                 expected.append(name)
         self.assertCountEqual(server.__all__, expected)
 
