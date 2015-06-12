@@ -1,7 +1,5 @@
 language: python
-install:
-  - pip install tox
-script:
-  - tox
-env:
-  - TOXENV=py34
+python:
+  - "3.4"
+  - "nightly"
+script: "python -m unittest discover"
