@@ -7,7 +7,7 @@ import time
 import unittest
 import urllib.request
 
-from http.cookiejar import (time2isoz, http2time, iso2time, time2netscape,
+from httplib3.cookiejar import (time2isoz, http2time, iso2time, time2netscape,
      parse_ns_headers, join_header_words, split_header_words, Cookie,
      CookieJar, DefaultCookiePolicy, LWPCookieJar, MozillaCookieJar,
      LoadError, lwp_cookie_str, DEFAULT_HTTP_PORT, escape_path,

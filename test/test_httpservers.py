@@ -15,7 +15,7 @@ import base64
 import shutil
 import urllib.parse
 import html
-import http.client
+import httplib3.client
 import tempfile
 from io import BytesIO
 
@@ -68,7 +68,7 @@ class BaseTestCase(unittest.TestCase):
         support.threading_cleanup(*self._threads)
 
     def request(self, uri, method='GET', body=None, headers={}):
-        self.connection = http.client.HTTPConnection(self.HOST, self.PORT)
+        self.connection = httplib3.client.HTTPConnection(self.HOST, self.PORT)
         self.connection.request(method, uri, body, headers)
         return self.connection.getresponse()
 
@@ -116,7 +116,7 @@ class BaseHTTPServerTestCase(BaseTestCase):
 
     def setUp(self):
         BaseTestCase.setUp(self)
-        self.con = http.client.HTTPConnection(self.HOST, self.PORT)
+        self.con = httplib3.client.HTTPConnection(self.HOST, self.PORT)
         self.con.connect()
 
     def test_command(self):
@@ -249,7 +249,7 @@ class RequestHandlerLoggingTestCase(BaseTestCase):
             self.send_error(HTTPStatus.NOT_FOUND, 'File not found')
 
     def test_get(self):
-        self.con = http.client.HTTPConnection(self.HOST, self.PORT)
+        self.con = httplib3.client.HTTPConnection(self.HOST, self.PORT)
         self.con.connect()
 
         with support.captured_stderr() as err:
@@ -260,7 +260,7 @@ class RequestHandlerLoggingTestCase(BaseTestCase):
             err.getvalue().endswith('"GET / HTTP/1.1" 200 -\n'))
 
     def test_err(self):
-        self.con = http.client.HTTPConnection(self.HOST, self.PORT)
+        self.con = httplib3.client.HTTPConnection(self.HOST, self.PORT)
         self.con.connect()
 
         with support.captured_stderr() as err:

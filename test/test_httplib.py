@@ -1,5 +1,5 @@
 import errno
-from http import client
+from httplib3 import client
 import io
 import itertools
 import os
@@ -92,7 +92,7 @@ class EPipeSocket(FakeSocket):
 class NoEOFBytesIO(io.BytesIO):
     """Like BytesIO, but raises AssertionError on EOF.
 
-    This is used below to test that http.client doesn't try to read
+    This is used below to test that httplib3.client doesn't try to read
     more from the underlying file than it should.
     """
     def read(self, n=-1):
@@ -744,7 +744,7 @@ class BasicTest(TestCase):
         self.assertEqual("Basic realm=\"example\"",
                          resp.getheader("www-authenticate"))
 
-    # Test lines overflowing the max line size (_MAXLINE in http.client)
+    # Test lines overflowing the max line size (_MAXLINE in httplib3.client)
 
     def test_overflowing_status_line(self):
         body = "HTTP/1.1 200 Ok" + "k" * 65536 + "\r\n"
@@ -1045,7 +1045,7 @@ class OfflineTest(TestCase):
             if name in blacklist:
                 continue
             module_object = getattr(client, name)
-            if getattr(module_object, "__module__", None) == "http.client":
+            if getattr(module_object, "__module__", None) == "httplib3.client":
                 expected.add(name)
         self.assertCountEqual(client.__all__, expected)
 
@@ -1136,7 +1136,7 @@ class SourceAddressTest(TestCase):
         self.assertEqual(self.conn.sock.getsockname()[1], self.source_port)
 
     @unittest.skipIf(not hasattr(client, 'HTTPSConnection'),
-                     'http.client.HTTPSConnection not defined')
+                     'httplib3.client.HTTPSConnection not defined')
     def testHTTPSConnectionSourceAddress(self):
         self.conn = client.HTTPSConnection(HOST, self.port,
                 source_address=('', self.source_port))
@@ -1399,7 +1399,7 @@ class HTTPSTest(TestCase):
             h.request('GET', '/')
 
     @unittest.skipIf(not hasattr(client, 'HTTPSConnection'),
-                     'http.client.HTTPSConnection not available')
+                     'httplib3.client.HTTPSConnection not available')
     def test_host_port(self):
         # Check invalid host_port
 

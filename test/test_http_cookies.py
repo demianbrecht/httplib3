@@ -3,7 +3,7 @@
 import copy
 from test.support import run_unittest, run_doctest, check_warnings
 import unittest
-from http import cookies
+from httplib3 import cookies
 import pickle
 import warnings
 
