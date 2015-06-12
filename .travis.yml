@@ -2,7 +2,7 @@ language: python
 python:
   - "nightly"
 install:
-  - pip install coveralls, coverage
+  - pip install coveralls coverage
 script:
   - python -m unittest discover
   - coverage run --source=httplib3 -m unittest discover
