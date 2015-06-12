@@ -1,4 +1,9 @@
 language: python
 python:
   - "nightly"
-script: "python -m unittest discover"
+install:
+  - pip install coveralls, coverage
+script:
+  - python -m unittest discover
+  - coverage run --source=httplib3 -m unittest discover
+after_success: coveralls
